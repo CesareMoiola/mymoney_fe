@@ -1,0 +1,55 @@
+{
+    "mode": "light",
+
+    "primary": {
+        "main": "#6750A4",
+        "light": "#9A82DB",
+        "dark": "#381E72",
+        "contrastText": "#FFFFFF"
+    },
+
+    "secondary": {
+        "main": "#625B71",
+        "light": "#958DA5",
+        "dark": "#332D41",
+        "contrastText": "#FFFFFF"
+    },
+
+    "tertiary": {
+        "main":  "#7D5260",
+        "light": "#B58392",
+        "dark":  "#492532",
+        "contrastText": "#FFFFFF"
+    },
+
+    "primary_light": {
+        "main": "#EADDFF",
+        "light": "#F6EDFF",
+        "dark": "#D0BCFF",
+        "contrastText": "#21005D"
+    },
+
+    "secondary_light": {
+        "main": "#E8DEF8",
+        "light": "#F6EDFF",
+        "dark": "#CCC2DC",
+        "contrastText": "#1D192B"
+    },
+
+    "tertiary_light": {
+        "main":  "#FFD8E4",
+        "light": "#FFECF1",
+        "dark":  "#EFB8C8",
+        "contrastText": "#31111D"
+    },
+
+    "background": {
+        "paper": "#FFFBFE",
+        "default": "#FFFBFE",
+        "surface1": "#F7F2F9",
+        "surface2": "#F3EDF7",
+        "surface3": "#EEE8F4",
+        "surface4": "#EDE6F3",
+        "surface5": "#EAE3F1"
+    }
+}

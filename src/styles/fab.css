@@ -1,0 +1,22 @@
+.fab{
+    height: 56px !important;
+    width: 100% !important;
+    
+    justify-content: center I !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+    margin: 16px 0 32px 0 !important;
+    gap: 16px;
+}
+
+/*Mobile*/
+@media only screen and (max-width: 599px) {
+    .fab{             
+        width: 56px !important;
+        
+        margin: 2px !important;
+        position: absolute !important   ;
+        bottom: 16px;
+        right: 12px;
+    }
+}

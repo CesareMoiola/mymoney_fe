@@ -1,0 +1,26 @@
+.recurrence{
+    display: flex;
+    width: 100%;
+}
+
+.recurrence-actions{
+    max-width: 80px;
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+}
+
+.recurrence-layout{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 28px;
+}
+
+.recurrence-edit-button{
+    visibility: hidden;
+}
+
+.recurrence:hover .recurrence-edit-button{
+    visibility: visible;
+}

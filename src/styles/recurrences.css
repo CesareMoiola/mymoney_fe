@@ -1,0 +1,102 @@
+.recurrences-layout{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    gap: 16px;
+}
+
+.recurrences-card{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.recurrences-charts-card{
+    height: 100%;
+    width: 400px;
+
+    display: flex;
+    overflow-y: auto;
+    align-items: center;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.accordion-summary{
+    margin: 0 !important;
+}
+
+.exteme-position-section{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recurrences-total-section{
+    width: 100%;
+    padding: 16px;
+}
+
+.css-1c3t4ur-MuiPaper-root-MuiAccordion-root:before{
+    background-color: transparent !important;
+}
+
+.css-1pvvkxv-MuiButtonBase-root-MuiAccordionSummary-root{
+    min-height: 0px;
+    min-height: 32px !important;
+}
+
+.recurrences-header{
+    padding: 16px 16px 0 16px;
+    margin-bottom: 8px;
+}
+
+.MuiAccordionSummary-content{
+    margin: 0 0 0 0 !important;
+    height: 24px !important;
+}
+
+.MuiAccordionDetails-root{
+    padding: 8px 16px 0px 16px !important;
+}
+
+.recurrences-accordion{
+    margin-top: 16px;
+    margin-bottom: 0px;
+}
+
+.recurrence-mobile-info{
+    visibility: hidden;
+}
+
+.recurrence-legend{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recurrences-legend{
+    margin-top: 32px;
+    flex-direction: column;
+}
+
+/*Mobile*/
+@media only screen and (max-width: 599px) {
+    .recurrences-charts-card{
+        display: none !important;
+    }
+
+    .recurrence-desktop-info{
+        display: none !important;
+    }
+
+    .recurrence-mobile-info{
+        visibility: visible !important;
+    }
+}

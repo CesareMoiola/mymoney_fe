@@ -1,0 +1,15 @@
+.filled_icon {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 200,
+    'opsz' 24
+}
+
+.icon-text-button{
+    height: 40px !important;
+
+    border-radius: 32px !important;
+    padding: auto 24px auto 16px !important;
+    gap: 8px !important;
+}

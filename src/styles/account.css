@@ -1,0 +1,44 @@
+.account{
+    min-height: 184px;
+    min-width: 291px;
+
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    justify-content: center; 
+    
+    cursor: pointer;
+}
+
+.account_image{
+    height: 90px;
+    width: 150px;
+    border-radius: 8px !important;
+    background-color: "#ff7961" !important;
+}
+
+.account_data{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.account_title{
+    display: inline-block;
+    text-align: left !important;
+    font-weight: bold !important;
+}
+
+.buttons_header_container{
+    margin-left: 16px;
+    display: inline-block;
+}
+
+@media screen and (max-width: 700px) {
+    .account_image{
+        height: 60px;
+        width: 100px;
+    }
+}

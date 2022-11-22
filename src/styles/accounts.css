@@ -1,0 +1,59 @@
+.accounts{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.accounts_list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 16px;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+    overflow-y: auto !important;
+    align-content: flex-start;
+}
+
+.account_spacing{
+    cursor: pointer;
+}
+
+.dialog_header{
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 20px;
+}
+
+.dialog_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 20px 24px !important;
+    gap: 16px;
+}
+
+.account_title:focus{
+    outline: none;    
+}
+
+.data-view{
+    display: flex;
+    margin-bottom: 16px;
+}
+
+/*Tablet*/
+@media only screen and (max-width: 839px) {
+    .accounts_list{
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    .data-view{
+        justify-content: center;
+    }
+}

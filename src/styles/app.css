@@ -1,0 +1,42 @@
+.App{
+    width: 100vw;
+    height: 100vh;
+}
+
+.hidden-component{
+    visibility: hidden !important;
+}
+
+.icon-filled {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+  }
+
+ /*Scrollbar*/
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 8px;     
+    }
+  
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 32px; 
+        margin: 16px;
+      }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: lightgray;
+        border-radius: 32px;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: lightgray;;
+    }

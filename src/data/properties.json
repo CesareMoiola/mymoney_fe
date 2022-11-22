@@ -1,0 +1,5 @@
+{
+    "currency": "€",
+    "dateFormat": "DD/MM/YYYY",
+    "max_amount_length": 16
+}

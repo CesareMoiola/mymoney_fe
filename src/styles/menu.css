@@ -1,0 +1,35 @@
+.menu{
+    width: 100% ;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.home_menu_item{
+    height: 40px;
+    border-radius: 32px !important;
+    gap: 12px;
+}
+
+/*Tablet*/
+@media only screen and (max-width: 839px) {
+}
+
+/*Mobile*/
+@media only screen and (max-width: 599px) {
+    .menu{        
+        height: 100%;
+
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 12px 16px 16px 16px;
+    }
+
+    .home_menu_item{
+        height: 32px !important;
+        width: 64px !important;
+        padding: 0 !important;
+        border-radius: 16px !important;
+    }
+}

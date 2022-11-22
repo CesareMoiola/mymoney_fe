@@ -1,0 +1,74 @@
+.signIn{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signIn_card{
+    border-radius: 8px !important;
+    padding: 48px 40px 56px 40px;
+}
+
+.signIn_form{
+    display: flex;
+    max-width: 366px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    align-content: center;
+    gap: 24px;
+}
+
+.horizontal_texfields{
+    display: flex;
+    gap: 8px;
+}
+
+.signIn_button{
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.button_contained{
+    box-shadow: none !important;
+}
+
+.button{
+    margin-left: -8px !important;
+}
+
+.title{
+    opacity: 0.6;
+}
+
+.logo{
+    height: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.title_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.forgot_password{
+    padding: 4px 0 !important;
+}
+
+.password_div{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.signIn_text_field{
+    width: min(calc(100vw - 80px), 366px); 
+    min-width: 100px !important;
+}
