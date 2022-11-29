@@ -1,12 +1,15 @@
 import { useTheme } from '@mui/styles';
 import {  Dialog, DialogActions, DialogContent, DialogTitle, TextField, InputAdornment, Button,Typography } from '@mui/material';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {isAmountFormat} from "../js/stringFormatUtils";
-import { createNewAccount } from "../js/ApiGateway";
+import { createNewAccount, getAccounts } from "../js/ApiGateway";
+import { UserContext } from '../pages/Home';
 
 export default function NewAccountDialog(props){
 
     const theme = useTheme();
+
+    const email = useContext(UserContext);
 
     //New Account name
     const [newAccountName, setNewAccountName] = useState("");
@@ -28,9 +31,9 @@ export default function NewAccountDialog(props){
 
     //Save new account and refresh all accounts
     const saveNewAccount = () => {
-        createNewAccount(props.email, newAccountName, newAccountAmount, props.date);
+        createNewAccount(email, newAccountName, newAccountAmount, props.date);
         props.setIsDialogOpen(false);
-        props.updateHome();
+        props.setAccounts(getAccounts(email, props.date));
     }
 
 

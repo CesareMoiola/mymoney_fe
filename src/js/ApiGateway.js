@@ -178,6 +178,7 @@ const getRecurrences = function( email ){
     return recurrences;
 }
 
+//Save new recurrence
 const saveRecurrence = function (email, type, name, amount){
     const url = endPoint + "/save_recurrence";
     let data = {'email': email, 'type': type, 'name': name, 'amount': amount};
@@ -188,10 +189,11 @@ const saveRecurrence = function (email, type, name, amount){
     request.send(JSON.stringify(data));
 
     if (request.status === 200) return true;
-    
+
     return false;
 }
 
+//Update a recurrence
 const editRecurrence = function (email, id, type, name, amount){
     const url = endPoint + "/edit_recurrence";
     let data = {'email': email, 'id': id, 'type': type, 'name': name, 'amount': amount};
@@ -206,6 +208,7 @@ const editRecurrence = function (email, id, type, name, amount){
     return false;
 }
 
+//Delete a recurrence
 const deleteRecurrence = function (email, id){
     const url = endPoint + "/delete_recurrence";
     let data = {'email': email, 'id': id};
@@ -220,9 +223,102 @@ const deleteRecurrence = function (email, id){
     return false;
 }
 
+//Check if recurrence is payed or not
 const checkRecurrence = function(email, id, isChecked){
     const url = endPoint + "/check_recurrence";
     let data = {'email': email, 'id': id, 'isChecked': isChecked};
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(data));
+
+    if (request.status === 200) return true;
+
+    return false;
+}
+
+//Get all user's savings
+const getSavings = function( email ){
+    const url = endPoint + "/get_savings";
+    let data = {'email': email};
+    let recurrences = [];
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(data));
+
+    if (request.status === 200 && request.responseText !== "")  recurrences = JSON.parse(request.responseText);
+
+    return recurrences;
+}
+
+
+//Save new saving
+const saveSaving = function (email, date, name, amount, saved){
+    const url = endPoint + "/save_saving";
+    let data = {'email': email, 'date': date, 'name': name, 'amount': amount, 'saved': saved};
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(data));
+
+    if (request.status === 200) return true;
+
+    return false;
+}
+
+//Delete saving
+const deleteSaving = function (email, id){
+    const url = endPoint + "/delete_saving";
+    let data = {'email': email, 'id': id};
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(data));
+
+    if (request.status === 200) return true;
+
+    return false;
+}
+
+//Active or pause a saving
+const activeSaving = function (email, id){
+    const url = endPoint + "/active_saving";
+    let data = {'email': email, 'id': id};
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(data));
+
+    if (request.status === 200) return true;
+
+    return false;
+}
+
+//Edit saving
+const editSaving = function (email, id, date, name, amount, saved){
+    const url = endPoint + "/edit_saving";
+    let data = {'email': email, 'id': id, 'date': date , 'name': name, 'amount': amount, 'saved': saved};
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(data));
+
+    if (request.status === 200) return true;
+
+    return false;
+}
+
+//Deposit or withdraw an amount from a saving
+const transactionSaving = function (email, id, transactionAmount){
+    const url = endPoint + "/saving_transaction";
+    let data = {'email': email, 'id': id, 'transaction_amount': transactionAmount};
     
     var request = new XMLHttpRequest();
     request.open('POST', url, false);
@@ -247,5 +343,11 @@ export{
     saveRecurrence,
     deleteRecurrence,
     editRecurrence,
-    checkRecurrence
+    checkRecurrence,
+    getSavings,
+    saveSaving,
+    deleteSaving,
+    activeSaving,
+    editSaving,
+    transactionSaving
 };

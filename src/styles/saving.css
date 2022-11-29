@@ -1,0 +1,35 @@
+.saving-card{
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+.saving-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 8px;
+}
+
+.saving-progress{
+    display: flex;
+    align-items: center;
+}
+
+.saving-progress-bar{
+    width: 100% !important;
+}
+
+.saving-button{
+    margin: -5px -5px -5px 8px !important; 
+}
+
+.rotate-270{
+    transform:rotate(270deg);
+}
+
+.rotate-90{
+    transform:rotate(90deg);
+}

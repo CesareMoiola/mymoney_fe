@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import { Dialog, DialogContent, Typography, DialogActions, Button } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import { deleteRecurrence, getRecurrences } from '../js/ApiGateway';
+import { deleteSaving, getSavings } from '../js/ApiGateway';
 import { UserContext } from '../pages/Home';
 
-export default function DeleteRecurrenceDialog(props){
+export default function DeleteSavingsDialog(props){
 
     const theme = useTheme();
 
@@ -12,9 +12,9 @@ export default function DeleteRecurrenceDialog(props){
 
     const deleteHandler = () => {
         
-        deleteRecurrence(email, props.recurrence.id);
+        deleteSaving(email, props.saving.id);
         props.setIsDialogOpen(false);
-        props.setRecurrences(getRecurrences(email));
+        props.setSavings(getSavings(email));
     }
 
     return(
@@ -29,7 +29,7 @@ export default function DeleteRecurrenceDialog(props){
         >
             <DialogContent className='dialog_content'>
                 <Typography>
-                    Are you sure you want to delete the recurrence called "{props.recurrence.name}" ?
+                    Are you sure you want to delete the savings called "{props.saving.name}" ?
                 </Typography>                    
             </DialogContent>
             <DialogActions sx={{padding: "0 24px 24px 24px"}}>

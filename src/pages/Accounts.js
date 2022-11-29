@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {} from "../js/ApiGateway";
 import "../styles/accounts.css";
 import Account from "../components/Account";
@@ -10,11 +10,14 @@ import { useTheme } from '@mui/styles';
 import {isAmountFormat} from "../js/stringFormatUtils";
 import {getAccounts} from "../js/ApiGateway";
 import {getDayBefore} from "../js/dateUtils";
+import { UserContext } from './Home';
 
 function Accounts(props) {
 
+    const email = useContext(UserContext);
+
     //Date before selected date
-    var dayBeforeAccounts = getAccounts(props.email, getDayBefore(props.date));
+    var dayBeforeAccounts = getAccounts(email, getDayBefore(props.date));
 
     //How much was spent today
     let spendingToday = totalAmount(props.accounts) - totalAmount(dayBeforeAccounts);
@@ -58,8 +61,8 @@ function Accounts(props) {
 
     //Save account changes and refresh all accounts
     const saveAccount = () => {
-        updateAmount(props.email, selectedAccount.id, newAccountAmount, props.date); 
-        updateAccountName(props.email, selectedAccount.id, newAccountName);
+        updateAmount(email, selectedAccount.id, newAccountAmount, props.date); 
+        updateAccountName(email, selectedAccount.id, newAccountName);
         unselectAccount();
     }
 
@@ -70,7 +73,7 @@ function Accounts(props) {
         setNewAccountAmount(0);
         setAccountToDelete(null);
 
-        props.updateHome();
+        props.setAccounts(getAccounts(email, props.date));
     }
 
     //Select an account
@@ -82,7 +85,7 @@ function Accounts(props) {
 
     //Start process for deleting an account
     const deleteAccountHandler = () => {
-        deleteAccount(props.email, selectedAccount.id);
+        deleteAccount(email, selectedAccount.id);
         unselectAccount();
     }
 

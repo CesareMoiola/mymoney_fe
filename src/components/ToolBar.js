@@ -6,7 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import properites from '../data/properties.json';
-import { formatDate } from "../js/dateUtils";
+import { formatInputDate } from "../js/dateUtils";
 import AccountsMenu from './AccountsMenu';
 import { totalAmount } from '../js/AccountUtils';
 
@@ -32,7 +32,7 @@ export default function ToolBar(props){
                     <DatePicker
                         value={props.date}
                         inputFormat = {properites.dateFormat}
-                        onChange={(newDate) => {props.setDate(formatDate(newDate))}}
+                        onChange={(newDate) => {props.setDate(formatInputDate(newDate))}}
                         renderInput={(params) => <TextField className="data-picker" size="small" {...params} />}
                         componentsProps={{
                             actionBar: { actions: ["today"] },

@@ -8,6 +8,7 @@ import NewTransationDialog from './NewTransactionDialog';
 import MuiFab from '@mui/material/Fab';
 import NewAccountDialog from './NewAccountDIalog';
 import NewRecurrenceDialog from './NewRecurrenceDialog';
+import NewSavingsDialog from './NewSavingsDialog';
 
 
 export default function Fab(props){
@@ -26,11 +27,11 @@ export default function Fab(props){
         let dialog = null;
 
         switch(location.pathname){
-            case '/':               dialog = <NewTransationDialog email={props.email} date={props.date} updateHome={props.updateHome} accounts={props.accounts} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />;    break;
-            case '/home':           dialog = <NewTransationDialog email={props.email} date={props.date} updateHome={props.updateHome} accounts={props.accounts} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />;    break;
-            case '/accounts':       dialog = <NewAccountDialog email={props.email} date={props.date} updateHome={props.updateHome} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
-            case '/recurrences':    dialog = <NewRecurrenceDialog  email={props.email} updateHome={props.updateHome} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
-            case '/savings':        dialog = null;    break;
+            case '/':               dialog = <NewTransationDialog date={props.date} accounts={props.accounts} setAccounts={props.setAccounts} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />;    break;
+            case '/home':           dialog = <NewTransationDialog date={props.date} accounts={props.accounts} setAccounts={props.setAccounts} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />;    break;
+            case '/accounts':       dialog = <NewAccountDialog date={props.date} setAccounts={props.setAccounts} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
+            case '/recurrences':    dialog = <NewRecurrenceDialog setRecurrences={props.setRecurrences} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
+            case '/savings':        dialog = <NewSavingsDialog setSavings={props.setSavings} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
             case '/investments':    dialog = null;    break;
         }
 
@@ -46,7 +47,7 @@ export default function Fab(props){
             case '/home':           fabTitle = 'New transaction';  break;
             case '/accounts':       fabTitle = 'New account';  break;
             case '/recurrences':    fabTitle = 'New recurrence';  break;
-            case '/savings':        fabTitle = null;  break;
+            case '/savings':        fabTitle = 'New savings';  break;
             case '/investments':    fabTitle = null;  break;
         }
 
@@ -62,7 +63,7 @@ export default function Fab(props){
             case '/home':           fabIcon = 'sync_alt';  break;
             case '/accounts':       fabIcon = 'add';  break;
             case '/recurrences':    fabIcon = 'add';  break;
-            case '/savings':        fabIcon = null;  break;
+            case '/savings':        fabIcon = 'add';  break;
             case '/investments':    fabIcon = null;  break;
         }
 

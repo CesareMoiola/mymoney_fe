@@ -1,0 +1,8 @@
+.saving-saved-label{
+    display: flex;
+    justify-content: space-between;
+}
+
+.initial-saved-slider{
+    width: calc(100%) !important;
+}

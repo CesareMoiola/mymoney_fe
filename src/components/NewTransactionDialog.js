@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button, DialogActions, InputAdornment, TextField, MenuItem, Select, InputLabel, FormControl, Dialog, DialogContent, Typography, DialogTitle } from '@mui/material';
 import { isAmountFormat } from '../js/stringFormatUtils';
 import properties from '../data/properties.json';
 import { useTheme } from '@mui/styles';
-import { saveTransaction } from '../js/ApiGateway';
+import { getAccounts, saveTransaction } from '../js/ApiGateway';
+import { UserContext } from '../pages/Home';
 
 export default function NewTransationDialog(props){
 
@@ -12,6 +13,7 @@ export default function NewTransationDialog(props){
     const [accountTo, setAccountTo] = useState('');
     const [amount, setAmount] = useState(''); 
     const theme = useTheme();   
+    const email = useContext(UserContext);
 
     //Change amount of selected account
     const amountChangeHandler = (event) => {        
@@ -31,10 +33,10 @@ export default function NewTransationDialog(props){
 
     //Save transaction
     const saveHandler = () => {
-        let isTransactionSuccessful = saveTransaction(props.email, props.date, type, account, accountTo, amount);
+        let isTransactionSuccessful = saveTransaction(email, props.date, type, account, accountTo, amount);
         if(isTransactionSuccessful){
             console.log("Transition was successfully processed")
-            props.updateHome();
+            props.setAccounts(getAccounts(email, props.date));
         }
         else{ console.error("Transition was not processed correctly")}
         props.setIsDialogOpen(false);

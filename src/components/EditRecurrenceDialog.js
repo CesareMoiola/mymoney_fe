@@ -1,12 +1,15 @@
 import { useTheme } from '@mui/styles';
-import {  Dialog, DialogActions, DialogContent, DialogTitle, TextField, InputAdornment, Button, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import React, {useState, useEffect} from 'react';
+import { Radio, FormControlLabel, RadioGroup, Dialog, DialogActions, DialogContent, DialogTitle, TextField, InputAdornment, Button, Typography, FormControl } from '@mui/material';
+import React, {useState, useEffect, useContext} from 'react';
 import {isAmountFormat} from "../js/stringFormatUtils";
-import { editRecurrence } from "../js/ApiGateway";
+import { editRecurrence, getRecurrences } from "../js/ApiGateway";
+import { UserContext } from '../pages/Home';
 
 export default function EditRecurrenceDialog(props){
 
     const theme = useTheme();
+
+    const email = useContext(UserContext);
 
     //New recurrence type
     const [type, setType] = useState(props.recurrence.type);
@@ -31,9 +34,9 @@ export default function EditRecurrenceDialog(props){
 
     //Save new account and refresh all accounts
     const editRecurrenceHandler = () => {
-        editRecurrence(props.email, props.recurrence.id,  type, name, amount);
+        editRecurrence(email, props.recurrence.id,  type, name, amount);
         props.setIsDialogOpen(false);
-        props.updateHome();
+        props.setRecurrences(getRecurrences(email));
     }
 
     useEffect(()=>{
@@ -59,19 +62,10 @@ export default function EditRecurrenceDialog(props){
             </DialogTitle>
             <DialogContent className='dialog_content'>
                 <FormControl>
-
-                    <InputLabel id="type">type</InputLabel>
-                    {/* Recurrence type */}
-                    <Select
-                        labelId="type"
-                        label="type"
-                        onChange={(event) => {setType(event.target.value);}}
-                        MenuProps={{MenuListProps: {sx:{backgroundColor: theme.palette.primary_light.light}}}}
-                        value={type}
-                    >
-                        <MenuItem key={1} value={'EARING'}>Earing</MenuItem>
-                        <MenuItem key={2} value={'EXPENSE'}>Expense</MenuItem>
-                    </Select>
+                    <RadioGroup defaultValue={type} row aria-labelledby="type" onChange={(event) => {setType(event.target.value);}}>
+                        <FormControlLabel value="EARING" control={<Radio size='small'/>} label="Earing" />
+                        <FormControlLabel value="EXPENSE" control={<Radio size='small'/>} label="Expense" />
+                    </RadioGroup>
                 </FormControl>
                 
                 {/* Recurrence name */}

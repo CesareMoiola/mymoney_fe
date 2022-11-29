@@ -1,17 +1,20 @@
 import { Card, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Recurrence from '../components/Recurrence';
 import '../styles/recurrences.css';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import properties from '../data/properties.json';
 import NewRecurrenceDialog from '../components/NewRecurrenceDialog';
+import { UserContext } from './Home';
 
 export default function Recurrences(props){
 
     //Application theme
     const theme = useTheme();
+
+    const email = useContext(UserContext);
 
     const guide = 'This section shows all monthly recurring transactions. Whenever a transaction occurs, check the corresponding item to update the budget.'
 
@@ -90,7 +93,7 @@ export default function Recurrences(props){
 
     return(
         <div className='recurrences-layout'>
-            <NewRecurrenceDialog email={props.email} isDialogOpen={isNewRecurrenceDialogOpen} setIsDialogOpen={setIsNewRecurrenceDialogOpen}/>
+            <NewRecurrenceDialog isDialogOpen={isNewRecurrenceDialogOpen} setIsDialogOpen={setIsNewRecurrenceDialogOpen}/>
             <Card className='recurrences-card' elevation={0}>        
                 <div>
                     {/*Header*/}
@@ -120,7 +123,7 @@ export default function Recurrences(props){
                             </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            { props.recurrences.map( recurrence => recurrence.type==='EARING'?<Recurrence recurrence={recurrence} email={props.email} updateHome={props.updateHome}/>:null ) }
+                            { props.recurrences.map( recurrence => recurrence.type==='EARING'?<Recurrence recurrence={recurrence} setRecurrences={props.setRecurrences}/>:null ) }
                         </AccordionDetails>
                     </Accordion>
 
@@ -133,7 +136,7 @@ export default function Recurrences(props){
                             </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            { props.recurrences.map( recurrence => recurrence.type==='EXPENSE'?<Recurrence recurrence={recurrence} email={props.email} updateHome={props.updateHome}/>:null ) }
+                            { props.recurrences.map( recurrence => recurrence.type==='EXPENSE'?<Recurrence recurrence={recurrence} updateHome={props.updateHome}/>:null ) }
                         </AccordionDetails>
                     </Accordion>
 
@@ -162,7 +165,7 @@ export default function Recurrences(props){
 
             <Card className='recurrences-charts-card' elevation={0}>
 
-                <NewRecurrenceDialog email={props.email}/>
+                <NewRecurrenceDialog/>
 
                 {/*Chart*/}
                 <PieChart width={160} height={160} style={{marginTop:'32px'}}>

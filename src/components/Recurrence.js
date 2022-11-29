@@ -1,16 +1,19 @@
 import { Typography, Checkbox, Divider, IconButton } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../styles/recurrence.css';
 import properties from '../data/properties.json';
 import DeleteRecurrenceDialog from './DeleteRecurrenceDialog';
 import EditRecurrenceDialog from './EditRecurrenceDialog';
 import { checkRecurrence } from '../js/ApiGateway';
+import { UserContext } from '../pages/Home';
 
 export default function Recurrence(props){
 
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const [isCompleted, setIsCompleted] = useState(props.recurrence.completed);
+    const email = useContext(UserContext);
+
 
 
     const getValue = () => {
@@ -19,14 +22,14 @@ export default function Recurrence(props){
 
     const checkHandler = (isChecked) => {
         setIsCompleted(isChecked);
-        checkRecurrence(props.email, props.recurrence.id, isChecked);        
+        checkRecurrence(email, props.recurrence.id, isChecked);        
     }
 
     return(
         <div className="recurrence" key={props.recurrence.id}>
             
-            <DeleteRecurrenceDialog email={props.email} recurrence={props.recurrence} isDialogOpen={isDeleteDialogOpen} setIsDialogOpen={setIsDeleteDialogOpen} updateHome={props.updateHome}/>
-            <EditRecurrenceDialog email={props.email} recurrence={props.recurrence} isDialogOpen={isEditDialogOpen} setIsDialogOpen={setIsEditDialogOpen} updateHome={props.updateHome}/>
+            <DeleteRecurrenceDialog recurrence={props.recurrence} isDialogOpen={isDeleteDialogOpen} setIsDialogOpen={setIsDeleteDialogOpen} setRecurrences={props.setRecurrences}/>
+            <EditRecurrenceDialog recurrence={props.recurrence} isDialogOpen={isEditDialogOpen} setIsDialogOpen={setIsEditDialogOpen} setRecurrences={props.setRecurrences}/>
             
             <div className='recurrence-actions'>
                 <IconButton className={props.notInteractable?'hidden-component':'recurrence-edit-button'} onClick={() => setIsDeleteDialogOpen(true)} size='small' sx={{height:'24px', width:'24px', opacity:'0.6'}}>

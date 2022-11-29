@@ -47,13 +47,13 @@ export default function AccountsMenu(props){
                     open={open}
                     onClose={handleClose}
                     PaperProps={{
-                        'style': {'backgroundColor': theme.palette.primary_light.main, 'color': theme.palette.primary_light.contrastText},
+                        'style': {'backgroundColor': theme.palette.primary_light.light, borderRadius:'4px', color: theme.palette.primary_light.contrastText},
                         'elevation': 2,
-                      }}
+                    }}
                 >
                     <MenuItem onClick={()=>{setNewAccountDialogIsOpen(true); handleClose();}}>
                         <ListItemIcon>
-                            <span className = "material-symbols-outlined" style={{'color': theme.palette.primary_light.contrastText}}>add</span>
+                            <span className = "material-symbols-outlined" style={{color: theme.palette.primary_light.contrastText, fontSize:20}}>add</span>
                         </ListItemIcon>
                         <ListItemText>New account</ListItemText>
                     </MenuItem>
