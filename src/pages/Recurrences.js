@@ -145,6 +145,8 @@ export default function Recurrences(props){
 
                 <NewRecurrenceDialog/>
 
+                <Typography fontWeight='bold'>Monthly expenses</Typography>
+
                 {/*Chart*/}
                 <PieChart width={160} height={160} style={{marginTop:'32px'}}>
                     <Pie
@@ -164,7 +166,7 @@ export default function Recurrences(props){
 
                 {/*Legend*/}
                 <div className='recurrences-legend'>
-                    <div className='recurrence-legend'>
+                    <div className='legend'>
                         <span className="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.tertiary_light.main}}>
                             circle
                         </span>
@@ -172,7 +174,7 @@ export default function Recurrences(props){
                             Expenses
                         </Typography>
                     </div>
-                    <div className='recurrence-legend'>
+                    <div className='legend'>
                         <span className="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.primary_light.main}}>
                             circle
                         </span>
@@ -180,7 +182,7 @@ export default function Recurrences(props){
                             Savings and Investments
                         </Typography>
                     </div>
-                    <div className='recurrence-legend'>
+                    <div className='legend'>
                         <span className="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.primary.main}}>
                             circle
                         </span>

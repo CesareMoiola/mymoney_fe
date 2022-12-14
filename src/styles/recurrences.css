@@ -18,7 +18,7 @@
 
 .recurrences-charts-card{
     height: 100%;
-    width: 400px;
+    min-width: 300px;
 
     display: flex;
     overflow-y: auto;
@@ -73,12 +73,6 @@
 
 .recurrence-mobile-info{
     visibility: hidden;
-}
-
-.recurrence-legend{
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .recurrences-legend{

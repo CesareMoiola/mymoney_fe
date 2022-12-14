@@ -13,3 +13,9 @@
     padding: auto 24px auto 16px !important;
     gap: 8px !important;
 }
+
+.legend{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

@@ -81,7 +81,7 @@ export default function Home(){
                         <Route path="/home/*" element={<Dashboard budget={budget}/>}/>
                         <Route path="/accounts/*" element={<Accounts date={date} accounts={accounts} setAccounts={setAccounts}/>}/>
                         <Route path="/recurrences/*" element={<Recurrences recurrences={recurrences} setRecurrences={setRecurrences} budget={budget}/>}/>
-                        <Route path="/savings/*" element={<Savings savings={savings} setSavings={setSavings}/>}/>
+                        <Route path="/savings/*" element={<Savings savings={savings} setSavings={setSavings} budget={budget}/>}/>
                         <Route path="/investments/*" element={<div></div>}/>
                     </Routes>
 
