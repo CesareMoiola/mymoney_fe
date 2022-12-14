@@ -5,9 +5,9 @@ import properties from '../data/properties.json';
 import { formatDate, today, getDateDifference } from '../js/dateUtils';
 import { useTheme } from '@mui/styles';
 import DeleteSavingsDialog from './DeleteSavingsDialog';
+import SavingDialog from './SavingDialog';
 import { activeSaving, getSavings } from '../js/ApiGateway.js';
 import { UserContext } from '../pages/Home';
-import EditSavingDialog from './EditSavingDialog';
 import TransactionSavingDialog from './TransactionSavingDialog';
 
 export default function Saving(props){
@@ -25,20 +25,8 @@ export default function Saving(props){
         return 100 * ( props.saving.saved / props.saving.amount)
     }
 
-    const getDailySaving = () => {
-        let remaingingDays = getDateDifference(today(), props.saving.date);
-        let remaningAmount = props.saving.amount - props.saving.saved;
-
-        if(remaningAmount <= 0) remaningAmount = 0;
-
-        if(remaingingDays <= 0) return remaningAmount;
-
-        return Math.ceil(100 * remaningAmount / remaingingDays) / 100   ;
-
-    }
-
     const isSavingCompleted = () => {
-        return props.saving.saved >= props.saving.amount;
+        return props.saving.type === 'TARGET' && props.saving.saved >= props.saving.amount;
     }
 
     const handleMenuClick = (event) => { setAnchorEl(event.currentTarget); };
@@ -47,14 +35,13 @@ export default function Saving(props){
 
     const getMenu = () => {
         return(
-            <div>
+            <div style={{margin: '-5px -5px -5px 3px'}} >
                 <DeleteSavingsDialog saving={props.saving} setSavings={props.setSavings} isDialogOpen={deleteDialog} setIsDialogOpen={setDeleteDialog}/>
-                <EditSavingDialog saving={props.saving} setSavings={props.setSavings} isDialogOpen={editDialog} setIsDialogOpen={setEditDialog}/> 
+                <SavingDialog variant='edit' saving={props.saving} setSavings={props.setSavings} isDialogOpen={editDialog} setIsDialogOpen={setEditDialog}/> 
                 <TransactionSavingDialog variant='deposit' saving={props.saving} setSavings={props.setSavings} isDialogOpen={depositDialog} setIsDialogOpen={setDepositDialog}/>
                 <TransactionSavingDialog variant='withdraw' saving={props.saving} setSavings={props.setSavings} isDialogOpen={withdrawDialog} setIsDialogOpen={setWithdrawDialog}/>
 
                 <IconButton 
-                    className='saving-button' 
                     size='small'
                     aria-controls={open ? 'long-menu' : undefined}
                     aria-expanded={open ? 'true' : undefined}
@@ -107,36 +94,58 @@ export default function Saving(props){
         props.setSavings(getSavings(email));
     }
 
+    const getPauseButton = () => {
+
+        const completeButton = (
+            <Tooltip title={'Completed'}>
+                <IconButton className='icon-button'  size='small' color='primary' disableRipple>
+                    <span className = "material-symbols-outlined" style={{fontSize: '20px'}}>done</span>
+                </IconButton>
+            </Tooltip>  
+        )
+
+        const pausePlayButton = (
+            <Tooltip title={props.saving.active?'Pause saving':'Active saving'}>
+                <IconButton className='icon-button' size='small' onClick={()=>{activeClickHandler()}}>
+                    <span className = "material-symbols-outlined" style={{fontSize: '20px'}}>{props.saving.active?'pause':'play_arrow'}</span>
+                </IconButton>
+            </Tooltip>
+        )
+
+        return isSavingCompleted()? completeButton : pausePlayButton;
+    }
+
     return(
         <Card className='saving-card' elevation={0}>
             <div className='saving-header'>
-                <Typography fontWeight='bold'>{props.saving.name}</Typography>                
-                {/*Saving menu*/ getMenu()}                
+                <div className='saving-name'>
+                    {/*Pause / play / completed button*/ getPauseButton()}
+
+                    {/* Name */}
+                    <Typography fontWeight='bold'>{props.saving.name}</Typography> 
+                </div>
+                
+                <div className='right-header'>
+                    {/* Saved */}
+                    <Typography fontWeight='bold'> {properties.currency + ' ' + props.saving.saved} </Typography>
+
+                    {/* Amount */
+                        props.saving.type === 'TARGET' ? (
+                            <Typography variant='caption' color='secondary' style={{marginLeft: '4px'}}>
+                                { ' / ' + props.saving.amount }
+                            </Typography>
+                        ) : null
+                    }
+
+                    {/*Saving menu*/ getMenu()} 
+                </div>   
             </div>
             
-            <Typography>{properties.currency + ' ' + props.saving.saved + ' / ' + props.saving.amount}</Typography>
-            
-            <div className='saving-progress'>
-                <LinearProgress className='saving-progress-bar' variant="determinate" value={getProgress()}/>
-                {
-                    isSavingCompleted()?
-                    <Tooltip title={'Completed'}>
-                        <IconButton className='saving-button' size='small' color='primary' disableRipple>
-                            <span className = "material-symbols-outlined" style={{fontSize: '24px'}}>done</span>
-                        </IconButton>
-                    </Tooltip>  
-                    :
-                    <Tooltip title={props.saving.active?'Pause saving':'Active saving'}>
-                        <IconButton className='saving-button' size='small' onClick={()=>{activeClickHandler()}}>
-                            <span className = "material-symbols-outlined" style={{fontSize: '24px'}}>{props.saving.active?'pause':'play_arrow'}</span>
-                        </IconButton>
-                    </Tooltip>
-                }         
-            </div>
+            <LinearProgress className='saving-progress-bar' variant="determinate" style={{opacity: props.saving.type === 'TARGET' ? 1 : 0}} value={getProgress()}/>
             <Typography variant='caption' color='secondary' sx={{opacity: isSavingCompleted()?'0':'1'}}>
                 {
                     props.saving.active?
-                    (properties.currency + ' ' + getDailySaving() + ' per day until ' + formatDate(props.saving.date))
+                    (properties.currency + ' ' + props.saving.dailyAmount + ' per day' + (props.saving.type === 'TARGET' ? ' until ' + formatDate(props.saving.date):''))
                     :
                     'Paused'
                 }

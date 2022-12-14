@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../styles/layout.css";
 import "../styles/home.css";
 import { useTheme } from '@mui/styles';
@@ -10,7 +10,7 @@ import Accounts from "./Accounts";
 import Dashboard from './Dashboard';
 import ToolBar from '../components/ToolBar';
 import {today} from "../js/dateUtils";
-import { getAccounts, getRecurrences, getSavings } from '../js/ApiGateway';
+import { getAccounts, getBudget, getRecurrences, getSavings } from '../js/ApiGateway';
 import Recurrences from './Recurrences';
 import Fab from '../components/Fab';
 import Savings from './Savings';
@@ -27,6 +27,7 @@ export default function Home(){
     const [accounts, setAccounts] = useState(getAccounts(email, date));
     const [recurrences, setRecurrences] = useState(getRecurrences(email));
     const [savings, setSavings] = useState(getSavings(email));
+    const [budget, setBudget] = useState(getBudget(email));
     const windowDimensions = useWindowDimensions();
     let mobileMode = isMobileMode(windowDimensions);
     let tabletMode = isTabletMode(windowDimensions);
@@ -51,13 +52,20 @@ export default function Home(){
         )
     }
 
+    const changeDateHandler = (newDate) => {
+        setDate(newDate);
+        setAccounts(getAccounts(email, newDate));
+    }
+
+    useEffect(()=>{ setBudget(getBudget(email)) },[accounts, recurrences, savings])
+
     return (
         <UserContext.Provider value={email}>
             <div className="container" style={{backgroundColor: theme.palette.background.surface2}}>
                 
                 <div className='tool-bar'>
                     {/*Tool bar*/}
-                    <ToolBar date={date} setDate={setDate} accounts={accounts}/>
+                    <ToolBar date={date} setDate={changeDateHandler} accounts={accounts}/>
                 </div>
                 
                 {/*Header*/ mobileMode?null:<Header className='header'/>}
@@ -70,9 +78,9 @@ export default function Home(){
                 <div className='body'>
                     <Routes>
                         <Route path="/" element={<Navigate to={"/home"}/>}/>
-                        <Route path="/home/*" element={<Dashboard/>}/>
+                        <Route path="/home/*" element={<Dashboard budget={budget}/>}/>
                         <Route path="/accounts/*" element={<Accounts date={date} accounts={accounts} setAccounts={setAccounts}/>}/>
-                        <Route path="/recurrences/*" element={<Recurrences recurrences={recurrences} setRecurrences={setRecurrences}/>}/>
+                        <Route path="/recurrences/*" element={<Recurrences recurrences={recurrences} setRecurrences={setRecurrences} budget={budget}/>}/>
                         <Route path="/savings/*" element={<Savings savings={savings} setSavings={setSavings}/>}/>
                         <Route path="/investments/*" element={<div></div>}/>
                     </Routes>

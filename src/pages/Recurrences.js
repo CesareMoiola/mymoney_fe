@@ -7,14 +7,11 @@ import '../styles/recurrences.css';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import properties from '../data/properties.json';
 import NewRecurrenceDialog from '../components/NewRecurrenceDialog';
-import { UserContext } from './Home';
 
 export default function Recurrences(props){
 
     //Application theme
     const theme = useTheme();
-
-    const email = useContext(UserContext);
 
     const guide = 'This section shows all monthly recurring transactions. Whenever a transaction occurs, check the corresponding item to update the budget.'
 
@@ -34,13 +31,16 @@ export default function Recurrences(props){
         
         props.recurrences.map(
             recurrence => {
-                if(recurrence.type === 'EXPENSE') data.push({ name: recurrence.name, value: Math.abs(recurrence.amount), color: theme.palette.tertiary_light.main})
+                if(recurrence.type === 'EXPENSE') data.push({ 
+                    name: recurrence.name, value: Math.abs(recurrence.amount), color: theme.palette.tertiary_light.main
+                })
+                if(recurrence.type === 'OTHER') data.push({
+                    name: recurrence.name, value: Math.abs(recurrence.amount), color: theme.palette.primary_light.main
+                })
             }
         );
-
-        data.push({ name: 'Savings', value: 120, color: theme.palette.primary_light.main});
-        data.push({ name: 'Investments', value: 60, color: theme.palette.primary_light.main});
-        data.push({ name: 'Budget', value: 270, color:theme.palette.primary.light});
+        
+        data.push({ name: 'Budget', value: props.budget.startingBudget, color:theme.palette.primary.light});
 
         return data;
     }
@@ -59,32 +59,11 @@ export default function Recurrences(props){
           return null;
     }
 
-    const getTotal = () => {
+    const getTotalRecurrencesType = (type) => {
         let total = 0;
 
         props.recurrences.forEach(recurrence => {
-            if(recurrence.type === 'EXPENSE') total -= Math.abs(recurrence.amount);
-            else if(recurrence.type === 'EARING') total += Math.abs(recurrence.amount);
-        });
-
-        return total;
-    }
-
-    const getTotalEarings = () => {
-        let total = 0;
-
-        props.recurrences.forEach(recurrence => {
-            if(recurrence.type === 'EARING') total += Math.abs(recurrence.amount);
-        });
-
-        return total;
-    }
-
-    const getTotalExpenses = () => {
-        let total = 0;
-
-        props.recurrences.forEach(recurrence => {
-            if(recurrence.type === 'EXPENSE') total -= Math.abs(recurrence.amount);
+            if(recurrence.type === type) total += Math.abs(recurrence.amount);
         });
 
         return total;
@@ -114,16 +93,16 @@ export default function Recurrences(props){
                         </Typography>
                     </div>     
 
-                    {/*Monthly earings*/}
+                    {/*Monthly earnings*/}
                     <Accordion className="recurrences-accordion" disableGutters elevation={0} expanded={isSectionOpen[0]}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon onClick={()=>(clickAccordionHandler(0))}/>}>
                             <div className='exteme-position-section'>
-                                <Typography>Monthly earings</Typography>
-                                <Typography variant="body2" sx={{opacity: "0.6", marginRight: "16px"}}>{properties.currency + " " + getTotalEarings()}</Typography>
+                                <Typography>Monthly earnings</Typography>
+                                <Typography variant="body2" sx={{opacity: "0.6", marginRight: "16px"}}>{properties.currency + " " + getTotalRecurrencesType('EARNING')}</Typography>
                             </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            { props.recurrences.map( recurrence => recurrence.type==='EARING'?<Recurrence recurrence={recurrence} setRecurrences={props.setRecurrences}/>:null ) }
+                            { props.recurrences.map( recurrence => recurrence.type==='EARNING'?<Recurrence recurrence={recurrence} setRecurrences={props.setRecurrences}/>:null ) }
                         </AccordionDetails>
                     </Accordion>
 
@@ -132,11 +111,11 @@ export default function Recurrences(props){
                         <AccordionSummary expandIcon={<ExpandMoreIcon onClick={()=>(clickAccordionHandler(1))}/>}>
                             <div className='exteme-position-section'>
                                 <Typography>Monthly expenses</Typography>
-                                <Typography variant="body2" sx={{opacity: "0.6", marginRight: "16px"}}>{properties.currency + " " + getTotalExpenses()}</Typography>
+                                <Typography variant="body2" sx={{opacity: "0.6", marginRight: "16px"}}>{properties.currency + " " + (- getTotalRecurrencesType('EXPENSE'))}</Typography>
                             </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            { props.recurrences.map( recurrence => recurrence.type==='EXPENSE'?<Recurrence recurrence={recurrence} updateHome={props.updateHome}/>:null ) }
+                            { props.recurrences.map( recurrence => recurrence.type==='EXPENSE'?<Recurrence recurrence={recurrence} updateHome={props.updateHome} setRecurrences={props.setRecurrences}/>:null ) }
                         </AccordionDetails>
                     </Accordion>
 
@@ -145,12 +124,11 @@ export default function Recurrences(props){
                         <AccordionSummary expandIcon={<ExpandMoreIcon onClick={()=>(clickAccordionHandler(2))}/>}>
                             <div className='exteme-position-section'>
                                 <Typography>Other</Typography>
-                                <Typography variant="body2" sx={{opacity: "0.6", marginRight: "16px"}}>€ 0</Typography>
+                                <Typography variant="body2" sx={{opacity: "0.6", marginRight: "16px"}}>{properties.currency + " " + (-getTotalRecurrencesType('OTHER'))}</Typography>
                             </div>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Recurrence notInteractable recurrence={{id:-1, name:"Savings", amount:0, completed:false }}/>
-                            <Recurrence notInteractable recurrence={{id:-2, name:"Investments", amount:0, completed:false }}/>
+                            { props.recurrences.map( recurrence => recurrence.type==='OTHER'?<Recurrence notInteractable recurrence={recurrence}/>:null )}
                         </AccordionDetails>
                     </Accordion>
 
@@ -159,7 +137,7 @@ export default function Recurrences(props){
                 {/*Total*/}
                 <div className="recurrences-total-section exteme-position-section">
                     <Typography>Total:</Typography>
-                    <Typography variant="body2" sx={{opacity: "0.6", marginRight: "40px"}}>{properties.currency + " " + getTotal()}</Typography>
+                    <Typography variant="body2" sx={{opacity: "0.6", marginRight: "40px"}}>{properties.currency + " " + props.budget.startingBudget}</Typography>
                 </div>
             </Card>
 
@@ -187,7 +165,7 @@ export default function Recurrences(props){
                 {/*Legend*/}
                 <div className='recurrences-legend'>
                     <div className='recurrence-legend'>
-                        <span class="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.tertiary_light.main}}>
+                        <span className="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.tertiary_light.main}}>
                             circle
                         </span>
                         <Typography variant='caption' color='secondary'>
@@ -195,7 +173,7 @@ export default function Recurrences(props){
                         </Typography>
                     </div>
                     <div className='recurrence-legend'>
-                        <span class="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.primary_light.main}}>
+                        <span className="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.primary_light.main}}>
                             circle
                         </span>
                         <Typography variant='caption' color='secondary'>
@@ -203,7 +181,7 @@ export default function Recurrences(props){
                         </Typography>
                     </div>
                     <div className='recurrence-legend'>
-                        <span class="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.primary.main}}>
+                        <span className="material-symbols-outlined icon-filled" style={{fontSize: 12, marginTop:'-1px', color: theme.palette.primary.main}}>
                             circle
                         </span>
                         <Typography variant='caption'  color='secondary'>

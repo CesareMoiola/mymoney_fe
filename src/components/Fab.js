@@ -8,7 +8,7 @@ import NewTransationDialog from './NewTransactionDialog';
 import MuiFab from '@mui/material/Fab';
 import NewAccountDialog from './NewAccountDIalog';
 import NewRecurrenceDialog from './NewRecurrenceDialog';
-import NewSavingsDialog from './NewSavingsDialog';
+import SavingDialog from './SavingDialog';
 
 
 export default function Fab(props){
@@ -31,7 +31,7 @@ export default function Fab(props){
             case '/home':           dialog = <NewTransationDialog date={props.date} accounts={props.accounts} setAccounts={props.setAccounts} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />;    break;
             case '/accounts':       dialog = <NewAccountDialog date={props.date} setAccounts={props.setAccounts} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
             case '/recurrences':    dialog = <NewRecurrenceDialog setRecurrences={props.setRecurrences} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
-            case '/savings':        dialog = <NewSavingsDialog setSavings={props.setSavings} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
+            case '/savings':        dialog = <SavingDialog variant='new' setSavings={props.setSavings} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>;    break;
             case '/investments':    dialog = null;    break;
         }
 

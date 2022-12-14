@@ -11,7 +11,6 @@ function Account(props) {
 
     const theme = useTheme();
     const [isFocus, setFocus] = useState(false);
-    const [unsavedChanges, setUnsavedChanges] = useState(false);
 
     return(
         <Card 

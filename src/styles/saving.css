@@ -3,27 +3,21 @@
     display: flex;
     flex-direction: column;
     max-width: 400px;
+    width: 500px;
 }
 
 .saving-header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
-    gap: 8px;
-}
-
-.saving-progress{
-    display: flex;
-    align-items: center;
 }
 
 .saving-progress-bar{
-    width: 100% !important;
+    margin: 4px 2px 2px 2px;
 }
 
-.saving-button{
-    margin: -5px -5px -5px 8px !important; 
+.icon-button{
+    margin: -5px !important;
 }
 
 .rotate-270{
@@ -32,4 +26,18 @@
 
 .rotate-90{
     transform:rotate(90deg);
+}
+
+.saving-name{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.right-header{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
 }

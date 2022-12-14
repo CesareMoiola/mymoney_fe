@@ -1,7 +1,20 @@
-.preview-card-header{
+.preview-card-title{
     display: flex;
     align-items: center;
     gap : 8px; 
+}
 
-    margin: 16px;
+.preview-card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.preview-card{
+    padding: 16px;
+}
+
+.preview-body{
+    margin-top: 16px;
+    width: 100%;
 }

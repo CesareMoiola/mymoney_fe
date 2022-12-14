@@ -4,7 +4,7 @@ import '../styles/recurrence.css';
 import properties from '../data/properties.json';
 import DeleteRecurrenceDialog from './DeleteRecurrenceDialog';
 import EditRecurrenceDialog from './EditRecurrenceDialog';
-import { checkRecurrence } from '../js/ApiGateway';
+import { checkRecurrence, getRecurrences } from '../js/ApiGateway';
 import { UserContext } from '../pages/Home';
 
 export default function Recurrence(props){
@@ -17,12 +17,13 @@ export default function Recurrence(props){
 
 
     const getValue = () => {
-       return properties.currency + ' ' + (props.recurrence.type === 'EXPENSE' ?'-':'') + Math.abs(props.recurrence.amount);
+       return properties.currency + ' ' + (props.recurrence.type === 'EXPENSE' || props.recurrence.type === 'OTHER' ?'-':'') + Math.abs(props.recurrence.amount);
     }
 
     const checkHandler = (isChecked) => {
         setIsCompleted(isChecked);
-        checkRecurrence(email, props.recurrence.id, isChecked);        
+        checkRecurrence(email, props.recurrence.id, isChecked);     
+        props.setRecurrences(getRecurrences(email));   
     }
 
     return(

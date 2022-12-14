@@ -256,9 +256,9 @@ const getSavings = function( email ){
 
 
 //Save new saving
-const saveSaving = function (email, date, name, amount, saved){
+const saveSaving = function (email, date, name, type, amount, saved){
     const url = endPoint + "/save_saving";
-    let data = {'email': email, 'date': date, 'name': name, 'amount': amount, 'saved': saved};
+    let data = {'email': email, 'date': date, 'name': name, 'type': type, 'amount': amount, 'saved': saved};
     
     var request = new XMLHttpRequest();
     request.open('POST', url, false);
@@ -301,9 +301,9 @@ const activeSaving = function (email, id){
 }
 
 //Edit saving
-const editSaving = function (email, id, date, name, amount, saved){
+const editSaving = function (email, id, date, name, type, amount, saved){
     const url = endPoint + "/edit_saving";
-    let data = {'email': email, 'id': id, 'date': date , 'name': name, 'amount': amount, 'saved': saved};
+    let data = {'email': email, 'id': id, 'date': date , 'name': name, 'type': type, 'amount': amount, 'saved': saved};
     
     var request = new XMLHttpRequest();
     request.open('POST', url, false);
@@ -330,6 +330,22 @@ const transactionSaving = function (email, id, transactionAmount){
     return false;
 }
 
+//Deposit or withdraw an amount from a saving
+const getBudget = function (email){
+    const url = endPoint + "/get_budget";
+    let data = {'email': email};
+    let budget = {};
+    
+    var request = new XMLHttpRequest();
+    request.open('POST', url, false);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(data));
+
+    if (request.status === 200) budget = JSON.parse(request.responseText);
+
+    return budget;
+}
+
 export{
     signUp,
     signIn,
@@ -349,5 +365,6 @@ export{
     deleteSaving,
     activeSaving,
     editSaving,
-    transactionSaving
+    transactionSaving,
+    getBudget
 };

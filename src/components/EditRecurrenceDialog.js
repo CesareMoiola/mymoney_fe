@@ -63,7 +63,7 @@ export default function EditRecurrenceDialog(props){
             <DialogContent className='dialog_content'>
                 <FormControl>
                     <RadioGroup defaultValue={type} row aria-labelledby="type" onChange={(event) => {setType(event.target.value);}}>
-                        <FormControlLabel value="EARING" control={<Radio size='small'/>} label="Earing" />
+                        <FormControlLabel value="EARNING" control={<Radio size='small'/>} label="Earning" />
                         <FormControlLabel value="EXPENSE" control={<Radio size='small'/>} label="Expense" />
                     </RadioGroup>
                 </FormControl>
