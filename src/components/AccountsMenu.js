@@ -5,7 +5,7 @@ import { useTheme } from '@mui/styles';
 import NewAccountDialog from './NewAccountDIalog';
 import useWindowDimensions, {isMobileMode} from '../js/WindowUtils';
 
-export default function AccountsMenu(props){
+export default function AccountsMenu(){
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [newAccountDialogIsOpen, setNewAccountDialogIsOpen] = useState(false);

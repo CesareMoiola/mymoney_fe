@@ -38,10 +38,7 @@ export default function ToolBar(props){
                             actionBar: { actions: ["today"] },
                         }}
                     />
-                </LocalizationProvider>
-                
-                {/*Context menu*/ <AccountsMenu/>}
-                
+                </LocalizationProvider>                
             </div>
         </div>
     )
