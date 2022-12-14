@@ -26,7 +26,10 @@ function Account(props) {
             onFocus={()=>{setFocus(true)}}
         >
             <div className = "account_data">
-                <Typography className= "account_title" variant="h5">{props.account.name}</Typography>
+                <div className='account-header'>
+                    <Typography className= "account_title" variant="h5">{props.account.name}</Typography>
+                    {props.account.favorite ? <span className = "material-symbols-outlined filled_icon" style={{fontSize:'20px', color: theme.palette.primary.main}}>favorite</span> : null}
+                </div>
                 <div>
                     <Typography sx={{opacity: 0.6, textAlign: "right"}}>current balance</Typography>
                     <Typography variant="h5" sx={{textAlign: "right"}}>{properties.currency + " " + props.account.amount}</Typography>

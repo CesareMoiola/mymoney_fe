@@ -91,10 +91,10 @@ const updateAmount = function( email, accountId, amount, date){
     return false;
 }
 
-//Update account name
-const updateAccountName = function( email, id, name){
-    const url = endPoint + "/update_account_name";
-    let data = {'email': email, 'accountId': id, 'name': name};
+//Update account
+const updateAccount = function( email, id, name, favorite){
+    const url = endPoint + "/update_account";
+    let data = {'email': email, 'accountId': id, 'name': name, 'favorite': favorite};
     
     var request = new XMLHttpRequest();
     request.open('POST', url, false);
@@ -351,7 +351,7 @@ export{
     signIn,
     getAccounts,
     updateAmount,
-    updateAccountName,
+    updateAccount,
     createNewAccount,
     deleteAccount,
     saveTransaction,

@@ -10,6 +10,12 @@
     cursor: pointer;
 }
 
+.account-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .account_image{
     height: 90px;
     width: 150px;

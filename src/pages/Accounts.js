@@ -4,12 +4,12 @@ import "../styles/accounts.css";
 import Account from "../components/Account";
 import properites from "../data/properties.json"
 import { totalAmount } from "../js/AccountUtils";
-import { updateAmount, updateAccountName, deleteAccount} from "../js/ApiGateway";
+import { updateAmount, updateAccount, deleteAccount} from "../js/ApiGateway";
 import { Dialog, DialogActions, DialogContent, IconButton, TextField, InputAdornment, Button,Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import {isAmountFormat} from "../js/stringFormatUtils";
-import {getAccounts} from "../js/ApiGateway";
-import {getDayBefore} from "../js/dateUtils";
+import { isAmountFormat } from "../js/stringFormatUtils";
+import { getAccounts } from "../js/ApiGateway";
+import { getDayBefore } from "../js/dateUtils";
 import { UserContext } from './Home';
 
 function Accounts(props) {
@@ -37,6 +37,10 @@ function Accounts(props) {
     //New Account name
     const [newAccountName, setNewAccountName] = useState("");
 
+    //New account is favorite
+    const [newAccountIsFavorite, setNewAccountIsFavorite] = useState(false);
+
+
     //Change amount of selected account
     const amountChangeHandler = (event) => {
         let amount = event.target.value.replace( ",", "." );
@@ -47,6 +51,11 @@ function Accounts(props) {
     //Change name of selected account
     const nameChangeHandler = (event) => {
         setNewAccountName(event.target.textContent);
+    }
+
+    //Set or unset account as favorite
+    const favoriteChangeHandler = () => {
+        setNewAccountIsFavorite( !newAccountIsFavorite );
     }
 
     //Get account by id
@@ -62,7 +71,7 @@ function Accounts(props) {
     //Save account changes and refresh all accounts
     const saveAccount = () => {
         updateAmount(email, selectedAccount.id, newAccountAmount, props.date); 
-        updateAccountName(email, selectedAccount.id, newAccountName);
+        updateAccount(email, selectedAccount.id, newAccountName, newAccountIsFavorite);
         unselectAccount();
     }
 
@@ -72,6 +81,7 @@ function Accounts(props) {
         setNewAccountName(null);
         setNewAccountAmount(0);
         setAccountToDelete(null);
+        setNewAccountIsFavorite(false);
 
         props.setAccounts(getAccounts(email, props.date));
     }
@@ -81,6 +91,7 @@ function Accounts(props) {
         setSelectedAccount(account);
         setNewAccountName(account.name);
         setNewAccountAmount(account.amount);
+        setNewAccountIsFavorite(account.favorite);
     }
 
     //Start process for deleting an account
@@ -111,9 +122,13 @@ function Accounts(props) {
                 </Typography>
                 
                 <div className='buttons_header_container' style={{minWidth: "70px"}}>
-                    <IconButton size='small'>
-                        <span className = "material-symbols-outlined" style={{color: theme.palette.primary.main}}>favorite</span>
+                    
+                    {/* Favorite button */}
+                    <IconButton size='small' onClick={() => favoriteChangeHandler(selectedAccount)}>
+                        <span className = {"material-symbols-outlined " + (newAccountIsFavorite ? "filled_icon" : "")} style={{color: theme.palette.primary.main}}>favorite</span>
                     </IconButton>
+                    
+                    {/* Delete button */}
                     <IconButton size="small" onClick={() => setAccountToDelete(selectedAccount)}>
                         <span className = "material-symbols-outlined" style={{color: theme.palette.primary.main}}>delete</span>
                     </IconButton>
