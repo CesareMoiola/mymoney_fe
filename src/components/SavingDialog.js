@@ -14,7 +14,7 @@ export default function SavingDialog(props){
 
     const theme = useTheme();
 
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     //savings name
     const [name, setName] = useState();

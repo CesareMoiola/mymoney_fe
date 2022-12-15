@@ -19,7 +19,7 @@ export default function Saving(props){
     const [depositDialog, setDepositDialog] = useState(false);
     const [withdrawDialog, setWithdrawDialog] = useState(false);
     const open = Boolean(anchorEl);
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     const getProgress = () => {
         return 100 * ( props.saving.saved / props.saving.amount)
@@ -116,7 +116,7 @@ export default function Saving(props){
     }
 
     return(
-        <Card className='saving-card' elevation={0}>
+        <Card className='saving-card' elevation={0} sx={{borderRadius:'8px'}}>
             <div className='saving-header'>
                 <div className='saving-name'>
                     {/*Pause / play / completed button*/ getPauseButton()}

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from "react";
+import { UserContext } from '../pages/Home';
 import Saving from '../components/Saving';
 import '../styles/savings.css';
 import { useTheme } from '@mui/styles';
@@ -9,6 +10,7 @@ import { Card, Typography} from '@mui/material';
 export default function Savings(props){
 
     const theme = useTheme();
+    const screen = useContext(UserContext).screen;
 
     const getChartData = () => {
         
@@ -77,7 +79,7 @@ export default function Savings(props){
                             circle
                         </span>
                         <Typography variant='caption'  color='secondary'>
-                            {'Savings: ' + properties.currency + ' ' + getTotalDailySavings()}
+                            {'Savings: ' + properties.currency + ' ' + Math.round(getTotalDailySavings()*100)/100}
                         </Typography>
                     </div>
                     <div className='legend'>
@@ -85,7 +87,7 @@ export default function Savings(props){
                             circle
                         </span>
                         <Typography variant='caption'  color='secondary'>
-                            {'Remaining: ' + properties.currency + ' ' + props.budget.dailyBudget}
+                            {'Remaining: ' + properties.currency + ' ' + Math.round(props.budget.dailyBudget*100) / 100}
                         </Typography>
                     </div>
                 </div>
@@ -97,17 +99,20 @@ export default function Savings(props){
         <div className='savings'>
 
             {/* Savings list */}
-            <div className='savings-list'>
+            <Card elevation={0} className='savings-list' sx={{ backgroundColor: theme.palette.background.surface3 }}>
                 {props.savings.map( saving => <Saving saving={saving} setSavings={props.setSavings}/> )}
-            </div>
-
-            {/* Savings chart */}
-            <Card className='savings-charts' elevation={0}>
-                <div style={{display:'flex', justifyContent:'center'}}>
-                    {getDailySavingsChart()}
-                </div>
             </Card>
 
+            {/* Savings chart */
+                screen===properties.screen.MOBILE ?
+                null
+                :
+                <Card className='savings-charts' elevation={0}>
+                    <div style={{display:'flex', justifyContent:'center'}}>
+                        {getDailySavingsChart()}
+                    </div>
+                </Card>
+            }
         </div>
     );
 }

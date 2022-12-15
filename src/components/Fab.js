@@ -1,6 +1,6 @@
 import '../styles/fab.css';
-import React, { useEffect, useState } from "react";
-import useWindowDimensions, {isMobileMode, isTabletMode} from '../js/WindowUtils';
+import React, { useEffect, useState, useContext } from "react";
+import { UserContext } from '../pages/Home';
 import { useTheme } from '@mui/styles';
 import { Typography } from '@mui/material';
 import { useLocation } from "react-router-dom";
@@ -9,16 +9,15 @@ import MuiFab from '@mui/material/Fab';
 import NewAccountDialog from './NewAccountDIalog';
 import NewRecurrenceDialog from './NewRecurrenceDialog';
 import SavingDialog from './SavingDialog';
+import properties from "../data/properties.json";
 
 
 export default function Fab(props){
 
     const location = useLocation();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const windowDimensions = useWindowDimensions();
-    const theme = useTheme();    
-    let mobileMode = isMobileMode(windowDimensions);
-    let tabletMode = isTabletMode(windowDimensions);
+    const theme = useTheme();
+    const screen = useContext(UserContext).screen;
 
     useEffect(()=>{ setIsDialogOpen(false) },[location.pathname])
     
@@ -72,8 +71,8 @@ export default function Fab(props){
 
     const getStyle = () => {
         return {
-            boxShadow:  mobileMode?2:0, 
-            bottom: (location.pathname === '/recurrences' && mobileMode) ?'55px': null
+            boxShadow:  screen===properties.screen.MOBILE?2:0, 
+            bottom: (location.pathname === '/recurrences' && screen===properties.screen.MOBILE) ?'55px': null
         }
     }
 
@@ -82,7 +81,7 @@ export default function Fab(props){
             {getDialog()}
             <MuiFab className="fab" variant="extended" color="tertiary_light" aria-label="Transaction" sx={getStyle()} onClick={()=>{setIsDialogOpen(true)}}>
                 <span className = "material-symbols-outlined fab-icon" style={{color: theme.palette.tertiary_light.contrastText}}>{getFabIcon()}</span>
-                {(mobileMode||tabletMode)?null:<Typography color={theme.palette.tertiary_light.contrastText} fontWeight="bold">{getFabTitle()}</Typography>}
+                {(screen===properties.screen.MOBILE||screen===properties.screen.TABLET) ? null:<Typography color={theme.palette.tertiary_light.contrastText} fontWeight="bold">{getFabTitle()}</Typography>}
             </MuiFab>
         </div>
     )

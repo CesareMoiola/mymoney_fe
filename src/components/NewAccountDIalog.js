@@ -9,7 +9,7 @@ export default function NewAccountDialog(props){
 
     const theme = useTheme();
 
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     //New Account name
     const [newAccountName, setNewAccountName] = useState("");

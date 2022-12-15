@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import properties from "../data/properties.json";
 
 export const mobile_max_width = 599;
 
@@ -28,10 +29,9 @@ export default function useWindowDimensions() {
   return windowDimensions;
 }
 
-export function isMobileMode(windowDimensions){
-  return windowDimensions.width <= mobile_max_width;
-}
-
-export function isTabletMode(windowDimensions){
-  return windowDimensions.width > mobile_max_width && windowDimensions.width < tablet_max_width;
+export function getScreen(windowDimensions){
+  let screen = properties.screen.DESKTOP;  
+  if( windowDimensions.width <= tablet_max_width ) screen = properties.screen.TABLET;
+  if( windowDimensions.width <= mobile_max_width ) screen = properties.screen.MOBILE;
+  return screen;
 }

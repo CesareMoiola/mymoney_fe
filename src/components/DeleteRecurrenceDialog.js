@@ -8,7 +8,7 @@ export default function DeleteRecurrenceDialog(props){
 
     const theme = useTheme();
 
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     const deleteHandler = () => {
         

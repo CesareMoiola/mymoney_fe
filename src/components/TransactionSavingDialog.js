@@ -9,7 +9,7 @@ export default function TransactionSavingDialog(props){
 
     const theme = useTheme();
 
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     //Transiction amount
     const [transactionAmount, setTransictionAmount] = useState('');
@@ -17,16 +17,25 @@ export default function TransactionSavingDialog(props){
 
     //Deposit or withdraw from an amount
     const transactionAmountHandler = (event) => {
-        let newAmount = '' + event.target.value;
-        newAmount.replace( ",", "." );
 
-        if( isAmountFormat(newAmount) && newAmount >= 0){
+        //Amount to deposit or withdraw
+        let value = '' + event.target.value;
+        value.replace( ",", "." );
+
+        if( isAmountFormat(value) && value >= 0){
+
             if( props.variant === 'withdraw'){
-                if( newAmount <= props.saving.saved ) setTransictionAmount(newAmount);
+                if( value*1 <= props.saving.saved*1 ) setTransictionAmount(value);
                 else setTransictionAmount(props.saving.saved);
-            } 
+            }
+
             if( props.variant === 'deposit' ){
-                if((newAmount*1 + props.saving.saved*1) <= props.saving.amount) setTransictionAmount(newAmount);
+                console.log('Saving type: deposit')
+                console.log('Type == target? ' + (props.saving.type === 'TARGET'))
+                if(
+                    props.saving.type !== 'TARGET' 
+                    || (value*1 + props.saving.saved*1) <= props.saving.amount
+                ) setTransictionAmount(value);
                 else setTransictionAmount(props.saving.amount*1 - props.saving.saved*1);
             }            
         }       

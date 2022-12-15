@@ -1,5 +1,10 @@
 {
     "currency": "€",
     "dateFormat": "DD/MM/YYYY",
-    "max_amount_length": 16
+    "max_amount_length": 16,
+    "screen": {
+        "DESKTOP": "desktop",
+        "TABLET": "tablet",
+        "MOBILE": "mobile"
+    }
 }

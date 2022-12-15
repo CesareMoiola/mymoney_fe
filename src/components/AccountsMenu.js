@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from "react";
+import { UserContext } from '../pages/Home';
 import '../styles/context_menu.css';
 import { Menu, MenuItem, Button, IconButton, ListItemIcon, ListItemText } from "@mui/material";
 import { useTheme } from '@mui/styles';
 import NewAccountDialog from './NewAccountDIalog';
-import useWindowDimensions, {isMobileMode} from '../js/WindowUtils';
+import properties from "../data/properties.json";
 
 export default function AccountsMenu(){
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [newAccountDialogIsOpen, setNewAccountDialogIsOpen] = useState(false);
     const open = Boolean(anchorEl);
-    const theme = useTheme();
-    const windowDimensions = useWindowDimensions();
-    let mobileMode = isMobileMode(windowDimensions);
+    const theme = useTheme();    
+    const screen = useContext(UserContext).screen;
 
     const handleClick = (event) => { setAnchorEl(event.currentTarget); };
 
@@ -64,7 +64,7 @@ export default function AccountsMenu(){
 
     return (
         <div>
-            {mobileMode?getCompactVersion():getExtendedVersion()}
+            {screen===properties.screen.MOBILE?getCompactVersion():getExtendedVersion()}
             <NewAccountDialog dialogIsOpen={newAccountDialogIsOpen} setDialogIsOpen={setNewAccountDialogIsOpen} handleClose={handleClose}/>
         </div>
     )

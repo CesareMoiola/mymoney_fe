@@ -12,7 +12,7 @@ export default function Recurrence(props){
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const [isCompleted, setIsCompleted] = useState(props.recurrence.completed);
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
 
 

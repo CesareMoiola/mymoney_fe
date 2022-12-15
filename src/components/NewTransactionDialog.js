@@ -13,7 +13,7 @@ export default function NewTransationDialog(props){
     const [accountTo, setAccountTo] = useState('');
     const [amount, setAmount] = useState(''); 
     const theme = useTheme();   
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     //Change amount of selected account
     const amountChangeHandler = (event) => {        

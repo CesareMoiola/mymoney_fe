@@ -9,7 +9,7 @@ export default function EditRecurrenceDialog(props){
 
     const theme = useTheme();
 
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     //New recurrence type
     const [type, setType] = useState(props.recurrence.type);

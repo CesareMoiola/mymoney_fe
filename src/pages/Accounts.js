@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import {} from "../js/ApiGateway";
 import "../styles/accounts.css";
 import Account from "../components/Account";
-import properites from "../data/properties.json"
+import properites from "../data/properties.json";
 import { totalAmount } from "../js/AccountUtils";
 import { updateAmount, updateAccount, deleteAccount} from "../js/ApiGateway";
 import { Dialog, DialogActions, DialogContent, IconButton, TextField, InputAdornment, Button,Typography } from '@mui/material';
@@ -14,7 +14,7 @@ import { UserContext } from './Home';
 
 function Accounts(props) {
 
-    const email = useContext(UserContext);
+    const email = useContext(UserContext).email;
 
     //Date before selected date
     var dayBeforeAccounts = getAccounts(email, getDayBefore(props.date));
